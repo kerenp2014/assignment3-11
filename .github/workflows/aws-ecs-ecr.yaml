@@ -77,7 +77,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ vars.AWS_REGION }}
+        aws-region: ${{ secrets.AWS_REGION }}
 
     - uses: opentofu/setup-opentofu@v1
       with:
@@ -117,8 +117,8 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
         AWS_REGION: us-east-1
-        REGISTRY_ALIAS: ${{ vars.REGISTRY_ALIAS }}
-        ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+        REGISTRY_ALIAS: ${{ secrets.REGISTRY_ALIAS }}
+        ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
       run: |
         cd app/node
         docker build -t $ECR_REGISTRY/$REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG .
